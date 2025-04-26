@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>StoryWeave - Home</title>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather&family=Poppins:wght@400;600&family=Shadows+Into+Light&display=swap" rel="stylesheet">
+  
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #fdf6f0;
+      color: #333;
+      overflow-x: hidden;
+    }
+
+    header {
+      background: url('https://images.unsplash.com/photo-1524985069026-dd778a71c7b4') no-repeat center center;
+      background-size: cover;
+      height: 100vh;
+      min-height: 600px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: white;
+      padding: 0 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    header h1 {
+      font-family: 'Shadows Into Light', cursive;
+      font-size: 4rem;
+      margin-bottom: 10px;
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    header p {
+      font-size: 1.2rem;
+      max-width: 600px;
+      animation: fadeIn 3s ease-in-out;
+    }
+
+    .read-btn {
+      margin-top: 20px;
+      background-color: #ff6b6b;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      font-size: 1rem;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .read-btn:hover {
+      background-color: #e75a5a;
+    }
+
+    section {
+      padding: 60px 20px;
+      text-align: center;
+    }
+
+    .section-title {
+      font-size: 2.5rem;
+      font-family: 'Merriweather', serif;
+      margin-bottom: 20px;
+    }
+
+    .section-desc {
+      max-width: 800px;
+      margin: auto;
+      font-size: 1.1rem;
+    }
+
+    .img-card {
+      margin-top: 30px;
+      width: 100%;
+      max-width: 700px;
+      border-radius: 20px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+      transition: transform 0.4s ease;
+    }
+
+    .img-card:hover {
+      transform: scale(1.03);
+    }
+
+    .genres {
+      display: none;
+      padding: 40px 20px;
+      background: #fff2e6;
+    }
+
+    .genre-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      margin-top: 30px;
+    }
+
+    .genre-card {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+      padding: 20px;
+      transition: transform 0.3s ease;
+    }
+
+    .genre-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .book-title {
+      font-weight: bold;
+      margin: 10px 0;
+    }
+
+    .genre-name {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+      font-family: 'Merriweather', serif;
+    }
+
+    .get-started {
+      background-color: #6c5ce7;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      margin-top: 10px;
+    }
+
+    .get-started:hover {
+      background-color: #574b90;
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Horizontal Timeline Section */
+    .timeline-section {
+      padding: 60px 20px;
+      background: #fff8f2;
+    }
+
+    .timeline-container {
+      display: flex;
+      overflow-x: auto;
+      gap: 20px;
+      padding: 20px 0;
+      scroll-snap-type: x mandatory;
+    }
+
+    .timeline-card {
+      flex: 0 0 auto;
+      width: 300px;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+      padding: 20px;
+      scroll-snap-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .timeline-card:hover {
+      transform: scale(1.03);
+    }
+
+    .timeline-card h3 {
+      font-family: 'Merriweather', serif;
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+    }
+
+    .timeline-card p {
+      font-size: 0.95rem;
+      color: #555;
+    }
+
+    .timeline-card img {
+      width: 100%;
+      border-radius: 15px;
+      margin-bottom: 10px;
+    }
+
+    .timeline-card a {
+      color: #6c5ce7;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .timeline-card img {
+      width: 100%;
+      height: 200px; /* adjust to match others */
+      object-fit: cover;
+      border-radius: 10px;
+    }
+    
+    .explore-button-container {
+      display: flex;
+      justify-content: center;
+      margin: 20px 0;
+    }
+
+    #explore-btn {
+      background-color: #6a4caf;
+      color: white;
+      font-size: 1.2rem;
+      padding: 10px 25px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+   }
+
+   #explore-btn:hover {
+      background-color: #553a99;
+  }
+  .bg-characters {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background:
+    url('uid_mini-project/book.png') no-repeat center center,
+    linear-gradient(120deg, #1e1e2f, #2e294e, #3b2d63, #1b1b2f);
+  background-size: cover, 400% 400%;
+  background-blend-mode: overlay;
+  animation: gradientShift 15s ease infinite;
+  opacity: 0.25;
+  z-index: -1;
+  pointer-events: none;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+  </style>
+</head>
+<body>
+  <div class="bg-characters"></div>
+  <header>
+    <h1>Hey, Story Explorer! 📖</h1>
+    <p>Ready to dive into magical tales, timeless history, and stories you'll never forget?</p>
+    
+  </header>
+  <section id="travel-section" class="animated-bg">
+  <div class="section-title" data-aos="fade-up">🧳 Travel Through Time</div>
+  <p class="section-desc" data-aos="fade-up" data-aos-delay="200">From ancient castles to '90s school corridors, journey through the unforgettable moments of history in the most fun way!</p>
+
+  <div class="explore-button-container" style="text-align: center; margin: 20px 0;">
+    <button id="explore-btn" onclick="showHistory()">✨ Start to Explore ✨</button>
+  </div>
+
+  <!-- Video Section -->
+  <div style="text-align: center;">
+    <video class="img-card" data-aos="zoom-in" width="1000" height="500" controls autoplay muted loop style="border-radius: 12px;">
+      <source src="storyweave.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+
+  <!-- Create Your Own Story Button -->
+  <div class="create-story-container" data-aos="fade-up" data-aos-delay="400" style="text-align: center; margin: 20px 0;">
+    <a href="create-story.html">
+      <button id="create-story-btn" 
+              style="padding: 12px 25px; font-size:1rem; 
+                     background:#00b894; color:#fff; 
+                     border:none; border-radius:8px; cursor:pointer;">
+        📝 Create Your Own Story
+      </button>
+    </a>
+  </div>
+</section>
+
+  <!-- Timeline Section -->
+  <section id="timeline-section" class="timeline" style="display: none;">
+    <div class="section-title">📜 Relive History</div>
+    <div class="timeline-container">
+       <div class="timeline-card">
+        <img src="https://tse1.mm.bing.net/th?id=OIP.zv3wojLEZfxOUj59VL3QTgHaEK&pid=Api&P=0&h=180" alt="WWI Soldiers">
+        <h3>1914-1918: World War I</h3>
+        <p>A tragic global conflict that reshaped the world.</p>
+        <a href="https://youtu.be/-GsolnXOiBg" target="_blank">Watch 📺</a>
+      </div>
+      <div class="timeline-card">
+        <img src="https://tse4.mm.bing.net/th?id=OIP.J7vAbgNLLrxUNkPB65UpjAHaE7&pid=Api&P=0&h=180" alt="First UK Election">
+        <h3>1918: Women's Suffrage in the UK</h3>
+        <p>The UK granted women the right to vote, marking a huge milestone in equality.</p>
+        <a href="https://youtu.be/0WdrjDUZS68" target="_blank">Watch 📺</a>
+      </div>
+      <div class="timeline-card">
+        <img src="https://tse1.mm.bing.net/th?id=OIP.SxhP51dflccRJzfd4uV4bwHaEK&pid=Api&P=0&h=180" alt="D-Day Normandy">
+        <h3>1942: D-Day Normandy</h3>
+        <p>The Normandy invasion marked a significant turning point in WWII.</p>
+        <a href="https://youtu.be/c9Z-1sFg96g" target="_blank">Watch 📺</a>
+      </div>
+      <div class="timeline-card">
+        <img src="https://tse1.mm.bing.net/th?id=OIP.NVVYbdzFt44-t1h035DFOgHaFZ&pid=Api&P=0&h=180" alt="WW2 Liberation">
+        <h3>1944: Paris Liberation</h3>
+        <p>Paris was liberated from Nazi control, marking a turning point in World War II.</p>
+        <a href="https://youtu.be/t4L1xpVzZes" target="_blank">Watch 📺</a>
+      </div>
+      <div class="timeline-card">
+        <img src="https://tse2.mm.bing.net/th?id=OIP.a4Bl-uoqKpq4uOBs5Ew1AQHaEK&pid=Api&P=0&h=180" alt="WWII Surrender">
+        <h3>1945: End of World War II</h3>
+        <p>Allied forces declared victory as the war came to a close in Europe.</p>
+        <a href="https://youtu.be/U6RFAUmYU5o" target="_blank">Watch 📺</a>
+      </div>
+      <div class="timeline-card">
+        <img src="http://1.bp.blogspot.com/-TpMp1fY_hvc/Ugud5qJG6eI/AAAAAAAAL8Q/vf1-xCwnucI/s1600/india-first-independence-day-celebrations-august-15-1947-rare-photos+(60).jpg" alt="Gandhi">
+        <h3>1947: India’s Independence</h3>
+        <p>India stepped into freedom with non-violence, vision, and valor.</p>
+        <a href="https://youtu.be/RWUI6AEiLYE" target="_blank">Watch 📺</a>
+      </div>
+      <div class="timeline-card">
+        <img src="https://tse2.mm.bing.net/th?id=OIP.eqoWicVSTSHtZWnfwNBDawHaE_&pid=Api&P=0&h=180" alt="Sputnik Launch">
+        <h3>1957: The Space Race Begins</h3>
+        <p>The Soviet Union launched the first artificial satellite, Sputnik, into orbit.</p>
+        <a href="https://youtu.be/xvaEvCNZymo" target="_blank">Watch 📺</a>
+      </div>
+      <div class="timeline-card">
+        <img src="https://tse1.mm.bing.net/th?id=OIP.aalreNUQNsNoCWCwW6XkogHaHp&pid=Api&P=0&h=180" alt="Moon Landing">
+        <h3>1969: Moon Landing</h3>
+        <p>Neil Armstrong took "one small step for man" and changed history forever.</p>
+        <a href="https://youtu.be/oSUJIDKT8xc" target="_blank">Watch 📺</a>
+      </div>
+      <div class="timeline-card">
+        <img src="https://tse4.mm.bing.net/th?id=OIP.OJwcdkZm0isJtf1J-SiwNgHaE8&pid=Api&P=0&h=180" alt="Berlin Wall">
+        <h3>1989: Fall of Berlin Wall</h3>
+        <p>A symbol of division finally crumbled — reuniting a nation and hearts.</p>
+        <a href="https://youtu.be/IXzODWlTWgk" target="_blank">Watch 📺</a>
+      </div>
+      <div class="timeline-card">
+        <img src="https://tse2.mm.bing.net/th?id=OIP.uD8N2oVMmIBuO5Tw4XGmlQHaEK&pid=Api&P=0&h=180" alt="iPad Launch">
+        <h3>2010: The iPad Era</h3>
+        <p>Steve Jobs unveiled the future of tech with a device that changed everything.</p>
+        <a href="https://youtu.be/OBhYxj2SvRI" target="_blank">Watch 📺</a>
+      </div>
+  <div style="text-align: center; margin-top: 10px;">
+    <button id="close-btn" onclick="closeHistory()">❌ Close</button>
+  </div>
+  </section>
+<script>
+  function showHistory() {
+    document.getElementById('travel-section').style.display = 'none';
+    document.getElementById('timeline-section').style.display = 'block';
+    document.getElementById('timeline-section')
+            .scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function closeHistory() {
+    document.getElementById('timeline-section').style.display = 'none';
+    document.getElementById('travel-section').style.display = 'block';
+    document.getElementById('travel-section')
+            .scrollIntoView({ behavior: 'smooth' });
+  }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init();
+</script>
+
+</body>
+</html>

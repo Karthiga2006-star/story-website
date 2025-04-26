@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Write Your Story</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <style>
+    /* Add styles here */
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      color: white;
+      background-size: cover;
+      background-position: center;
+      min-height: 100vh;
+      backdrop-filter: brightness(0.6);
+    }
+
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 30px;
+      height: 100%;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background: rgba(255,255,255,0.1);
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 32px;
+      margin-bottom: 20px;
+      color: #fff;
+    }
+
+    textarea {
+      width: 100%;
+      height: 300px;
+      padding: 20px;
+      border-radius: 10px;
+      border: none;
+      font-size: 16px;
+      color: #222;
+      background: rgba(255,255,255,0.9);
+      resize: vertical;
+    }
+
+    .btn {
+      display: block;
+      margin: 20px auto 0;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      background: #FFD700;
+      color: #000;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background: #ffcf33;
+    }
+
+    .back-btn {
+      background-color:white; /* Red for back button */
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay">
+    <div class="container">
+      <h1 id="template-title">Your Story</h1>
+      <textarea id="storyArea"></textarea>
+      <button class="btn" onclick="saveStory()">✨ Save Story</button>
+      <button class="btn" onclick="downloadHTML()">📥 Download Story Page</button>
+      <button class="back-btn" onclick="goBack()">🔙 Back</button>
+
+      <!-- NEW: Read Stories button -->
+      <button class="btn" onclick="window.location.href='read-story.html'">
+        📖 Read Stories
+      </button>
+    </div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const title = params.get("title");
+    const starter = params.get("starter");
+    const image = params.get("image");
+
+    document.getElementById("template-title").textContent = title;
+    document.getElementById("storyArea").value = starter;
+    document.body.style.backgroundImage = `url('${image}')`;
+
+    function saveStory() {
+      const storyContent = document.getElementById("storyArea").value;
+
+      const story = {
+        title: title || "Untitled Story",
+        content: storyContent,
+        date: new Date().toLocaleDateString(),
+        rating: null,
+        comments: []
+      };
+
+      const stories = JSON.parse(localStorage.getItem("stories")) || [];
+      stories.push(story);
+      localStorage.setItem("stories", JSON.stringify(stories));
+
+      alert("Story saved successfully! 🥳");
+    }
+
+    function downloadHTML() {
+      const storyContent = document.getElementById("storyArea").value;
+
+      // HTML structure to download
+      const htmlContent = `
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="UTF-8" />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+          <title>${title}</title>
+          <style>
+            body {
+              font-family: 'Segoe UI', sans-serif;
+              color: white;
+              background-image: url('${image}');
+              background-size: cover;
+              background-position: center;
+              min-height: 100vh;
+              backdrop-filter: brightness(0.6);
+            }
+            .overlay {
+              background-color: rgba(0, 0, 0, 0.6);
+              padding: 30px;
+              height: 100%;
+            }
+            .container {
+              max-width: 800px;
+              margin: auto;
+              background: rgba(255,255,255,0.1);
+              padding: 30px;
+              border-radius: 16px;
+              box-shadow: 0 0 15px rgba(0,0,0,0.3);
+            }
+            h1 {
+              text-align: center;
+              font-size: 32px;
+              margin-bottom: 20px;
+              color: #fff;
+            }
+            textarea {
+              width: 100%;
+              height: 300px;
+              padding: 20px;
+              border-radius: 10px;
+              border: none;
+              font-size: 16px;
+              color: #222;
+              background: rgba(255,255,255,0.9);
+              resize: vertical;
+            }
+          </style>
+        </head>
+        <body>
+          <div class="overlay">
+            <div class="container">
+              <h1>${title}</h1>
+              <textarea readonly>${storyContent}</textarea>
+            </div>
+          </div>
+        </body>
+        </html>
+      `;
+
+      const blob = new Blob([htmlContent], { type: "text/html" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `${title}_story_page.html`; // Name the file based on the title
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function goBack() {
+      window.location.href = "create-story.html"; // Redirect to the create story page
+    }
+  </script>
+</body>
+
+</html>

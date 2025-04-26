@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Read Stories – StoryWeave</title>
+  <style>
+    body {
+      font-family: 'Georgia', serif;
+      background-color: #f0fdf4;
+      color: #2b2b2b;
+      padding: 30px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #006644;
+    }
+
+    .story-card {
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.1);
+      margin-bottom: 25px;
+    }
+
+    .story-title {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #004d40;
+    }
+
+    .story-content {
+      margin: 10px 0;
+    }
+
+    button {
+      background-color: #5bbd7a;
+      border: none;
+      padding: 8px 12px;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-right: 10px;
+    }
+
+    .rating, .comment-box {
+      margin-top: 10px;
+    }
+
+    textarea {
+      width: 100%;
+      height: 60px;
+      border-radius: 6px;
+      padding: 5px;
+      font-family: 'Georgia', serif;
+    }
+  </style>
+</head>
+<body>
+    <div class="container">
+      <h1>📚 Saved Stories</h1>
+      <div id="storiesContainer"></div>
+      <button onclick="goBack()" class="back-btn">🔙 Back</button>
+    </div>
+  
+    <script>
+      const container = document.getElementById("storiesContainer");
+      const stories = JSON.parse(localStorage.getItem("stories")) || [];
+  
+      if (stories.length === 0) {
+        container.innerHTML = "<p>No stories found. Start writing one!</p>";
+      } else {
+        stories.forEach((story, index) => {
+          const storyDiv = document.createElement("div");
+          storyDiv.className = "story-box";
+  
+          storyDiv.innerHTML = `
+            <h2>${story.title}</h2>
+            <p><em>Saved on: ${story.date}</em></p>
+            <textarea readonly>${story.content}</textarea>
+  
+            <button onclick="readAloud('${story.content.replace(/'/g, "\\'")}')">🔊 Read Aloud</button>
+  
+            <div class="rating-section">
+              <label for="rating-${index}">Rate this story:</label>
+              <select id="rating-${index}" onchange="rateStory(${index}, this.value)">
+                <option value="">⭐ Choose</option>
+                <option value="1">⭐</option>
+                <option value="2">⭐⭐</option>
+                <option value="3">⭐⭐⭐</option>
+                <option value="4">⭐⭐⭐⭐</option>
+                <option value="5">⭐⭐⭐⭐⭐</option>
+              </select>
+              <p>Current Rating: ${story.rating || "Not rated yet"}</p>
+            </div>
+  
+            <div class="comment-section">
+              <textarea id="comment-${index}" placeholder="Leave a comment..."></textarea>
+              <button onclick="addComment(${index})">💬 Add Comment</button>
+              <ul id="comments-${index}">
+                ${story.comments.map(comment => `<li>${comment}</li>`).join('')}
+              </ul>
+            </div>
+          `;
+  
+          container.appendChild(storyDiv);
+        });
+      }
+  
+      function goBack() {
+        window.location.href = "write-story.html";
+      }
+  
+      function readAloud(text) {
+        const utterance = new SpeechSynthesisUtterance(text);
+        speechSynthesis.speak(utterance);
+      }
+  
+      function rateStory(index, value) {
+        stories[index].rating = value;
+        localStorage.setItem("stories", JSON.stringify(stories));
+        location.reload();
+      }
+  
+      function addComment(index) {
+        const commentBox = document.getElementById(`comment-${index}`);
+        const comment = commentBox.value.trim();
+        if (comment) {
+          stories[index].comments.push(comment);
+          localStorage.setItem("stories", JSON.stringify(stories));
+          commentBox.value = "";
+          location.reload();
+        }
+      }
+    </script>
+    <style>
+        body {
+          background-color: #1c1c1e;
+          color: #f5f5f5;
+          font-family: 'Georgia', serif;
+          margin: 0;
+          padding: 0;
+          animation: fadeIn 1s ease-in;
+        }
+      
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+      
+        .container {
+          max-width: 900px;
+          margin: 40px auto;
+          padding: 40px;
+          background-color: rgba(255, 255, 255, 0.05);
+          border-radius: 16px;
+          box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+          backdrop-filter: blur(6px);
+          animation: slideUp 1.2s ease-out;
+        }
+      
+        @keyframes slideUp {
+          from { transform: translateY(30px); opacity: 0; }
+          to { transform: translateY(0); opacity: 1; }
+        }
+      
+        h1, h2 {
+          text-align: center;
+          color: #ffd700;
+          font-weight: bold;
+          animation: popIn 1.5s ease-in-out;
+        }
+      
+        @keyframes popIn {
+          0% { opacity: 0; transform: scale(0.95); }
+          100% { opacity: 1; transform: scale(1); }
+        }
+      
+        .story-card {
+          background-color: #2b2b2e;
+          border: 1px solid #444;
+          border-radius: 14px;
+          padding: 24px;
+          margin: 20px 0;
+          box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+          animation: fadeInCard 0.8s ease-in;
+        }
+      
+        .story-card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+        }
+      
+        @keyframes fadeInCard {
+          from { opacity: 0; transform: translateY(15px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+      
+        .story-card h3 {
+          color: #ffcc70;
+          margin-bottom: 10px;
+        }
+      
+        .story-card p {
+          font-size: 16px;
+          color: #e6e6e6;
+          line-height: 1.6;
+        }
+      
+        .btn, .rate-btn {
+          background-color: #3e3e40;
+          color: #ffffff;
+          border: none;
+          border-radius: 10px;
+          padding: 10px 18px;
+          margin-top: 15px;
+          cursor: pointer;
+          transition: 0.3s ease;
+        }
+      
+        .btn:hover, .rate-btn:hover {
+          background-color: #575759;
+          transform: scale(1.05);
+        }
+      
+        .comment-section {
+          margin-top: 20px;
+          background-color: #1f1f21;
+          padding: 10px;
+          border-radius: 10px;
+          animation: fadeIn 1.5s ease;
+        }
+      
+        textarea {
+          width: 100%;
+          padding: 10px;
+          border-radius: 8px;
+          border: none;
+          margin-top: 10px;
+          background-color: #333;
+          color: #fff;
+          resize: vertical;
+          transition: background-color 0.3s ease;
+        }
+      
+        textarea:focus {
+          background-color: #444;
+        }
+      </style>      
+  </body>
+  
+</html>

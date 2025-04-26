@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Create Your Story</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #2d2a31; /* Dark charcoal background */
+      color: #e0d0b5; /* Soft goldish text color */
+      overflow-x: hidden;
+    }
+
+    header {
+      background-color: #6a4c6c; /* Dark burgundy */
+      color: white;
+      text-align: center;
+      padding: 20px;
+      font-size: 28px;
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 20px;
+      background: #3a2d3b; /* Dark brownish-gray background */
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    }
+
+    .template-card {
+      display: flex;
+      align-items: center;
+      margin: 20px 0;
+      padding: 15px;
+      border: 1px solid #4c3b48; /* Darker border */
+      border-radius: 10px;
+      gap: 20px;
+      background-color: #4b3f4d; /* Darker background for cards */
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    .template-card img {
+      width: 150px;
+      border-radius: 10px;
+      transition: transform 0.3s ease;
+    }
+
+    .template-card h3 {
+      margin: 0;
+      font-size: 22px;
+      color: #e0d0b5; /* Soft gold for title */
+    }
+
+    .template-card p {
+      margin: 5px 0;
+      font-size: 15px;
+      color: #bcb6a6; /* Lighter gold for description */
+    }
+
+    .template-card button {
+      margin-top: 10px;
+      background: #6a4c6c; /* Dark burgundy for button */
+      color: white;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .template-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .template-card:hover img {
+      transform: scale(1.1);
+    }
+
+    .template-card button:hover {
+      background-color: #5a3e50; /* Slightly darker burgundy */
+    }
+
+    .back-link {
+      margin-left: 20px;
+      display: inline-block;
+      color: #e0d0b5; /* Soft gold back-link */
+      text-decoration: none;
+      font-weight: bold;
+      position: relative;
+      top: 10px;
+      animation: fadeIn 3s ease-in-out;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+      transform: translateY(-2px);
+    }
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Floating effect for the page */
+    .floating {
+      animation: floatAnimation 4s ease-in-out infinite;
+    }
+
+    @keyframes floatAnimation {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="floating">Create Your Story 📝</header>
+  <a href="storyweave.html" class="back-link">⬅ Back to Home</a>
+
+  <div class="container" id="templates">
+    <!-- Templates will be loaded here -->
+  </div>
+
+  <script>
+    const templates = [
+      {
+        title: "Fantasy Adventure",
+        image: "https://tse4.mm.bing.net/th?id=OIP.spGIOaMMl-Z0ccyGFgyw6AHaEK&pid=Api&P=0&h=180",
+        lines: [
+          "A dragon rises beyond the hills...",
+          "A forgotten sword calls your name...",
+          "The kingdom awaits its hero."
+        ],
+        starter: "Once upon a time, in a land of magic and dragons..."
+      },
+      {
+        title: "Historical Tale",
+        image: "https://tse4.mm.bing.net/th?id=OIP.qulu2FLz7xJxJgLnpCCrBQHaFT&pid=Api&P=0&h=180",
+        lines: [
+          "The dusty battlefield echoes past bravery.",
+          "Letters from war still smell of hope.",
+          "One decision shaped a generation."
+        ],
+        starter: "In the heart of the 1800s, a revolution was born..."
+      },
+      {
+        title: "Sci-Fi Mission",
+        image: "https://tse4.mm.bing.net/th?id=OIP.vjSNE1gaWCnjaBN4gl_rVwHaDI&pid=Api&P=0&h=180",
+        lines: [
+          "Stars blinked above the sleeping Earth.",
+          "AI whispered secrets of the universe.",
+          "The mission was simple: return or vanish."
+        ],
+        starter: "In 3024, the last humans boarded the Nebula-9 ship..."
+      },
+      {
+        title: "Mystery Journey",
+        image: "https://tse1.mm.bing.net/th?id=OIP.oK4yn6BFer7irXY6d0EbnwHaEK&pid=Api&P=0&h=180",
+        lines: [
+          "Footsteps in the hallway. But no one was there.",
+          "The old diary hid the truth.",
+          "Every clue led back to her."
+        ],
+        starter: "The rain hadn’t stopped since she disappeared..."
+      }
+    ];
+
+    const templateContainer = document.getElementById("templates");
+
+    function redirectToWrite(index) {
+      const selected = templates[index];
+      const params = new URLSearchParams({
+        title: selected.title,
+        starter: selected.starter,
+        image: selected.image
+      });
+      window.location.href = `write-story.html?${params.toString()}`;
+    }
+
+    templates.forEach((t, i) => {
+      const div = document.createElement("div");
+      div.classList.add("template-card");
+
+      div.innerHTML = `
+        <img src="${t.image}" alt="${t.title}" />
+        <div>
+          <h3>${t.title}</h3>
+          <p>${t.lines[0]}</p>
+          <p>${t.lines[1]}</p>
+          <p>${t.lines[2]}</p>
+          <button onclick="redirectToWrite(${i})">Use this Template</button>
+        </div>
+      `;
+
+      templateContainer.appendChild(div);
+    });
+  </script>
+</body>
+</html>
