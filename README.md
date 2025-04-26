@@ -18,6 +18,7 @@ Clone or download this repository.
 Open the index.html file in your browser.
 Explore, upload, and enjoy the world of stories!
 
+
  Applications
 Perfect for writers, readers, and creative artists who want to share and experience stories in a unique and engaging format.
 
